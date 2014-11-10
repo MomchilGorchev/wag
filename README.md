@@ -17,9 +17,9 @@ To watch files while developing run:
 `$ gulp serve`
 
 To watch compiled files run:
-`$ gulp serve:prod`
+`$ gulp serve:dist`
 
-Your compiled files will be generated in the `prod` folder
+Your compiled files will be generated in the `dist` folder
 
 ## Browser Support
 

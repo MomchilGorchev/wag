@@ -131,7 +131,7 @@ gulp.task('serve', ['styles'], function () {
     browserSync({
         notify: false,
         // Customize the BrowserSync console logging prefix
-        logPrefix: 'WSK',
+        logPrefix: 'NINJA-DEV',
         // Run as an https by uncommenting 'https: true'
         // Note: this uses an unsigned certificate which on first access
         //       will present a certificate warning in the browser.
@@ -149,7 +149,7 @@ gulp.task('serve', ['styles'], function () {
 gulp.task('serve:dist', ['default'], function () {
     browserSync({
         notify: false,
-        logPrefix: 'WSK',
+        logPrefix: 'NINJA-DEV',
         // Run as an https by uncommenting 'https: true'
         // Note: this uses an unsigned certificate which on first access
         //       will present a certificate warning in the browser.
