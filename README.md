@@ -2,13 +2,18 @@
 
 ## Overview
 
-This tool is aimed at frontend ninja developer.
+This tool is for frontend ninja developers.
+
+Use at your own risk! (Good Luck ;))
 
 ## How to use
 
 In order to modify the CSS or JS of the new implementation of PowaTag the developer should modify the files under the dev folder and then at the 2.0 root folder run:
 
 `$ npm install` (Only the first time you run it)
+
+If you don't have gulp globally installed run:
+`$ npm install gulp -g`
 
 To compile existing code:
 `$ gulp`
@@ -20,6 +25,13 @@ To watch compiled files run:
 `$ gulp serve:dist`
 
 Your compiled files will be generated in the `dist` folder
+
+## Instructions
+
+1. Clone this project
+2. Checkout the branch you want (Bootstrap, foundation...)
+3. Remove the .git file
+4. Add your custom versioning system
 
 ## Browser Support
 
