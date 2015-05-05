@@ -5,24 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <title></title>
         <link rel="stylesheet" href="styles/main.css">
-
-        <style type="text/css">
-            html, body { height: 100%; margin: 0; padding: 0;}
-        </style>
-        <script type="text/javascript"
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMDrvtGzBCupJxALP3LilpXzrV2NwPxhg">
-        </script>
-        <script type="text/javascript">
-            function initialize() {
-                var mapOptions = {
-                    center: { lat: 31.791702, lng: -7.092620},
-                    zoom: 2.5
-                };
-                var map = new google.maps.Map(document.getElementById('map-canvas'),
-                        mapOptions);
-            }
-            google.maps.event.addDomListener(window, 'load', initialize);
-        </script>
     </head>
     <body>
         <nav>
@@ -33,9 +15,9 @@
         </header>
         <section>
             <!-- Each section should be something like this -->
-
+            <a href="#" id="play-sound">Play</a>
+            <a href="#" id="stop-sound">Stop</a>
         </section>
-        <div id="map-canvas"></div>
 
         <!--TODO - Include inside this enclosure all your custom scripts you want to be deployed and minified -->
         <!-- build:js js/main.min.js -->
