@@ -1,3 +1,13 @@
+var WIDTH = window.innerWidth
+    || document.documentElement.clientWidth
+    || document.body.clientWidth;
+var HEIGHT = window.innerHeight
+    || document.documentElement.clientHeight
+    || document.body.clientHeight;
+
+console.log(WIDTH);
+console.log(HEIGHT);
+
 // Constructor class
 function MusicLoader(options, callback) {
     this.loadedMusic = null;
@@ -33,15 +43,61 @@ MusicLoader.prototype = {
 
     playSound: function(buffer){
         var _this = this;
-        var source = _this.context.createBufferSource(); // creates a sound source
-        source.buffer = buffer;                          // tell the source which sound to play
-        source.connect(_this.context.destination);       // connect the source to the context's destination (the speakers)
+        var source = _this.context.createBufferSource();
+        var analyser = _this.context.createAnalyser();
+        source.buffer = buffer;
+        analyser.connect(_this.context.destination);
+        source.connect(_this.context.destination);
+
         source.start(0);
+        analyser.maxDecibels = -10;
+        analyser.minDecibels = -90;
+        analyser.smoothingTimeConstant = 1;
+
+        var canvas = document.getElementById('visual'), ctx = canvas.getContext('2d');
+        analyser.fftSize = 256;
+        var bufferLength = analyser.frequencyBinCount;
+        //console.log(bufferLength);
+        var dataArray = new Uint8Array(bufferLength);
+
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+        console.log(dataArray);
+
+        console.log(bufferLength);
+
+        function draw() {
+            drawVisual = requestAnimationFrame(draw);
+
+            analyser.getByteFrequencyData(dataArray);
+
+            ctx.fillStyle = 'rgb(0, 0, 0)';
+            ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+            var barWidth = (WIDTH / bufferLength) * 2.5;
+            var barHeight;
+            var x = 0;
+
+            for(var i = 0; i < bufferLength; i++) {
+                barHeight = dataArray[i]/2;
+
+                //console.log(dataArray[i]);
+
+                ctx.fillStyle = 'rgb(' + (barHeight+100) + ',50,50)';
+                ctx.fillRect(x,HEIGHT-barHeight/2,barWidth,barHeight);
+
+                x += barWidth + 1;
+            }
+        }
+        draw();
     },
 
     stopSound: function(){
         var _this = this;
         var source = _this.context.createBufferSource();
+        source.buffer = _this.loadedMusic;                          // tell the source which sound to play
+        source.connect(_this.context.destination);
+        //source.start(2);
         source.stop(0);
     },
 
