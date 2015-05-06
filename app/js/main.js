@@ -5,6 +5,16 @@ var HEIGHT = window.innerHeight
     || document.documentElement.clientHeight
     || document.body.clientHeight;
 
+window.requestAnimationFrame = (function(){
+    return window.requestAnimationFrame  ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame    ||
+        window.oRequestAnimationFrame      ||
+        window.msRequestAnimationFrame     ||
+        function(callback){
+            window.setTimeout(callback, 1000 / 60);
+        };
+})();
 console.log(WIDTH);
 console.log(HEIGHT);
 
@@ -46,8 +56,8 @@ MusicLoader.prototype = {
         var source = _this.context.createBufferSource();
         var analyser = _this.context.createAnalyser();
         source.buffer = buffer;
+        source.connect(analyser);
         analyser.connect(_this.context.destination);
-        source.connect(_this.context.destination);
 
         source.start(0);
         analyser.maxDecibels = -10;
@@ -58,7 +68,7 @@ MusicLoader.prototype = {
         analyser.fftSize = 256;
         var bufferLength = analyser.frequencyBinCount;
         //console.log(bufferLength);
-        var dataArray = new Uint8Array(bufferLength);
+        var dataArray = new Float32Array(bufferLength);
 
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
@@ -66,10 +76,12 @@ MusicLoader.prototype = {
 
         console.log(bufferLength);
 
+        
+
         function draw() {
             drawVisual = requestAnimationFrame(draw);
 
-            analyser.getByteFrequencyData(dataArray);
+            analyser.getFloatFrequencyData(dataArray);
 
             ctx.fillStyle = 'rgb(0, 0, 0)';
             ctx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -79,11 +91,11 @@ MusicLoader.prototype = {
             var x = 0;
 
             for(var i = 0; i < bufferLength; i++) {
-                barHeight = dataArray[i]/2;
+                barHeight = 10;
 
                 //console.log(dataArray[i]);
 
-                ctx.fillStyle = 'rgb(' + (barHeight+100) + ',50,50)';
+                ctx.fillStyle = 'rgb(' + (barHeight+100) + ',150,50)';
                 ctx.fillRect(x,HEIGHT-barHeight/2,barWidth,barHeight);
 
                 x += barWidth + 1;
