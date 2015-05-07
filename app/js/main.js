@@ -21,7 +21,7 @@ console.log(HEIGHT);
 // Constructor class
 function MusicLoader(options, callback) {
     this.loadedMusic = null;
-    this.url = options.url || null
+    this.url = options.url || null;
     this.init(this.url);
 }
 
@@ -76,7 +76,7 @@ MusicLoader.prototype = {
 
         console.log(bufferLength);
 
-        
+
 
         function draw() {
             drawVisual = requestAnimationFrame(draw);
@@ -91,7 +91,7 @@ MusicLoader.prototype = {
             var x = 0;
 
             for(var i = 0; i < bufferLength; i++) {
-                barHeight = 10;
+                barHeight = dataArray[i] / 2;
 
                 //console.log(dataArray[i]);
 
