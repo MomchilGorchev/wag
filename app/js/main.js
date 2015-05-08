@@ -53,45 +53,35 @@ MusicLoader.prototype = {
 
     playSound: function(buffer){
         var _this = this;
-        var source = _this.context.createBufferSource();
-        var analyser = _this.context.createAnalyser();
-        source.buffer = buffer;
-        source.connect(analyser);
-        analyser.connect(_this.context.destination);
+        var audioCtx = new AudioContext();
+        var audio = document.getElementById('mySong');
+        var audioSrc = audioCtx.createMediaElementSource(audio);
+        var analyser = audioCtx.createAnalyser();
+        // we have to connect the MediaElementSource with the analyser
+        audioSrc.connect(analyser);
+        //audioSrc.start(0);
 
-        source.start(0);
-        analyser.maxDecibels = -10;
-        analyser.minDecibels = -90;
-        analyser.smoothingTimeConstant = 1;
 
         var canvas = document.getElementById('visual'), ctx = canvas.getContext('2d');
-        analyser.fftSize = 256;
-        var bufferLength = analyser.frequencyBinCount;
-        //console.log(bufferLength);
-        var dataArray = new Float32Array(bufferLength);
+        var frequencyData = new Uint8Array(analyser.frequencyBinCount);
 
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
-
-        console.log(dataArray);
-
-        console.log(bufferLength);
-
 
 
         function draw() {
             drawVisual = requestAnimationFrame(draw);
 
-            analyser.getFloatFrequencyData(dataArray);
+            analyser.getByteFrequencyData(frequencyData);
 
             ctx.fillStyle = 'rgb(0, 0, 0)';
             ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
-            var barWidth = (WIDTH / bufferLength) * 2.5;
+            var barWidth = (WIDTH / 128) * 2.5;
             var barHeight;
             var x = 0;
 
-            for(var i = 0; i < bufferLength; i++) {
-                barHeight = dataArray[i] / 2;
+            for(var i = 0; i < 128; i++) {
+                barHeight = frequencyData[i] / 2;
 
                 //console.log(dataArray[i]);
 
