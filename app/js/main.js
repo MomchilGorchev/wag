@@ -82,8 +82,6 @@ MusicLoader.prototype = {
             for(var i = 0; i < 128; i++) {
                 barHeight = frequencyData[i] / 2;
 
-                //console.log(dataArray[i]);
-
                 ctx.fillStyle = 'rgb(' + (barHeight+100) + ',150,50)';
                 ctx.fillRect(x,HEIGHT-barHeight/2,barWidth,barHeight);
 
