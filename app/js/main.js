@@ -5,8 +5,7 @@ var HEIGHT = window.innerHeight
     || document.documentElement.clientHeight
     || document.body.clientHeight;
 
-window.requestAnimationFrame = (function(){
-    return window.requestAnimationFrame  ||
+window.requestAnimationFrame =  window.requestAnimationFrame  ||
         window.webkitRequestAnimationFrame ||
         window.mozRequestAnimationFrame    ||
         window.oRequestAnimationFrame      ||
@@ -14,7 +13,7 @@ window.requestAnimationFrame = (function(){
         function(callback){
             window.setTimeout(callback, 1000 / 60);
         };
-})();
+
 console.log(WIDTH);
 console.log(HEIGHT);
 
