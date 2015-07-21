@@ -1,7 +1,13 @@
 var canvas = document.getElementById('visual');
 var ctx = canvas.getContext('2d');
-var WIDTH = canvas.width = window.innerWidth / 2;
-var HEIGHT = canvas.height = window.innerHeight / 2;
+var WIDTH = canvas.width = window.innerWidth / 1.3;
+var HEIGHT = canvas.height = window.innerHeight / 1.3;
+
+console.log(WIDTH);
+console.log(canvas.width);
+console.log(HEIGHT);
+console.log(canvas.height);
+
 
 var audio = new Audio();
 audio.src = '../music/song1.mp3';
@@ -21,8 +27,6 @@ document.body.appendChild(audio);
         var analyser = audioCtx.createAnalyser();
         var gainNode = audioCtx.createGain();
 
-        //var stream = audioCtx.createMediaElementSource(audio);
-
         source = audioCtx.createMediaElementSource(audio);
         source.connect(analyser);
 
@@ -31,7 +35,7 @@ document.body.appendChild(audio);
         var dataArray = new Uint8Array(bufferLength);
 
         analyser.getByteTimeDomainData(dataArray);
-        source.connect(gainNode);
+        analyser.connect(gainNode);
         gainNode.connect(audioCtx.destination);
 
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
