@@ -12,7 +12,7 @@ console.log(canvas.height);
 var audio = new Audio();
 audio.src = '../music/song1.mp3';
 audio.controls = true;
-audio.autoplay = true;
+audio.autoplay = false;
 document.body.appendChild(audio);
 
 
