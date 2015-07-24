@@ -69,20 +69,24 @@ function draw() {
             a: Math.random()
         };
 
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(255, 255, 255, '+ color.a +')';
+        //ctx.strokeStyle = 'rgba('+ 0 +', '+ 100 +', '+ color.b +', '+ color.a +')';
+        ctx.lineWidth = 4;
         ctx.beginPath();
 
-        var radius = barHeight + barWidth / 3;
+        var radius = barHeight + barWidth / 2;
         ctx.arc(xCenter, yCenter, radius, 0, Math.PI * 2, false);
-
-        if(radius > 100){
-            ctx.moveTo(xCenter, yCenter);
-            ctx.lineTo(Math.random() * WIDTH, Math.random() * HEIGHT);
-        }
-
         ctx.closePath();
         ctx.stroke();
+
+        if(radius > 200){
+            ctx.lineWidth = 1;
+            ctx.moveTo(xCenter, yCenter);
+            ctx.lineTo(Math.random() * WIDTH, Math.random() * HEIGHT);
+            //ctx.stroke();
+        }
+
+
         ////
 
         //console.log();
