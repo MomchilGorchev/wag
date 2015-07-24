@@ -36,7 +36,7 @@ analyser.connect(gainNode);
 gainNode.connect(audioCtx.destination);
 
 
-analyser.fftSize = 256;
+analyser.fftSize = 32;
 
 var bufferLength = analyser.frequencyBinCount;
 console.log(bufferLength);
@@ -69,14 +69,18 @@ function draw() {
             a: Math.random()
         };
 
-        ctx.strokeStyle = 'rgba('+ 100 +','+ color.g +', 100, '+ color.a +')';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
         ctx.lineWidth = 2;
         ctx.beginPath();
 
-        //ctx.arc(xCenter, yCenter, Math.random() * barHeight * 2, 0, Math.PI * 2, false);
+        var radius = Math.random() * barHeight * 2;
+        ctx.arc(xCenter, yCenter, radius, 0, Math.PI * 2, false);
 
-        ctx.moveTo(x, x);
-        ctx.lineTo(x, HEIGHT-barHeight/2);
+        if(radius > 100){
+            ctx.moveTo(xCenter, yCenter);
+            ctx.lineTo(Math.random() * WIDTH, Math.random() * HEIGHT);
+        }
+
         ctx.closePath();
         ctx.stroke();
         ////
