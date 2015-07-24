@@ -73,7 +73,7 @@ function draw() {
         ctx.lineWidth = 2;
         ctx.beginPath();
 
-        var radius = Math.random() * barHeight * 2;
+        var radius = barHeight + barWidth / 3;
         ctx.arc(xCenter, yCenter, radius, 0, Math.PI * 2, false);
 
         if(radius > 100){
