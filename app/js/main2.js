@@ -40,11 +40,11 @@ function initMusicVisualization(){
 //if (navigator.getUserMedia) {
 //    navigator.getUserMedia({audio: true}, function(stream) {
 
-    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    var analyser = audioCtx.createAnalyser();
-    var gainNode = audioCtx.createGain();
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext)(),
+        analyser = audioCtx.createAnalyser(),
+        gainNode = audioCtx.createGain(),
+        source = audioCtx.createMediaElementSource(audio);
 
-    var source = audioCtx.createMediaElementSource(audio);
     source.connect(analyser);
     analyser.connect(gainNode);
     gainNode.connect(audioCtx.destination);
@@ -52,9 +52,8 @@ function initMusicVisualization(){
 
     analyser.fftSize = 32;
 
-    var bufferLength = analyser.frequencyBinCount;
-    console.log(bufferLength);
-    var dataArray = new Uint8Array(bufferLength);
+    var bufferLength = analyser.frequencyBinCount,
+        dataArray = new Uint8Array(bufferLength);
 
     ctx.fillStyle = 'rgb(0, 0, 0)';
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -68,12 +67,12 @@ function initMusicVisualization(){
         ctx.fillStyle = 'rgb(0, 0, 0)';
         ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
-        var barWidth = (WIDTH / bufferLength) * 2.5;
-        var barHeight;
+        var frWidth = (WIDTH / bufferLength) * 2.5;
+        var frHeight;
         var x = 0;
 
         for(var i = 0; i < bufferLength; i++) {
-            barHeight = dataArray[i]/2;
+            frHeight = dataArray[i]/2;
 
             var color = {
                 r: Math.floor(Math.random() * 255),
@@ -82,12 +81,12 @@ function initMusicVisualization(){
                 a: Math.random()
             };
 
-            ctx.strokeStyle = 'rgba(255, '+ i* 10 % 255 +', '+ i* 10 % 255 +', '+ color.a +')';
+            ctx.strokeStyle = 'rgba('+ frHeight * 10 % 255 +', '+ frHeight * 10 % 255 +', '+ frHeight * 10 % 255 +', '+ color.a +')';
             //ctx.strokeStyle = 'rgba('+ 0 +', '+ 100 +', '+ color.b +', '+ color.a +')';
             ctx.lineWidth = 4;
             ctx.beginPath();
 
-            var radius = barHeight + barWidth / 2;
+            var radius = frHeight + frWidth / 2;
             ctx.arc(xCenter, yCenter, radius, 0, Math.PI * 2, false);
             ctx.closePath();
             ctx.stroke();
@@ -104,10 +103,10 @@ function initMusicVisualization(){
 
             //console.log();
 
-            //ctx.fillStyle = 'rgb(' + (barHeight+100) + ',50,50)';
-            //ctx.fillRect(x,HEIGHT-barHeight/2,barWidth,barHeight);
+            //ctx.fillStyle = 'rgb(' + (frHeight+100) + ',50,50)';
+            //ctx.fillRect(x,HEIGHT-frHeight/2,frWidth,frHeight);
 
-            x += barWidth + 1;
+            x += frWidth + 1;
         }
     }
 
