@@ -18,7 +18,7 @@ submitURL.addEventListener('click', function(e){
 
     e.preventDefault();
 
-    var url = inputURL.value;
+    var url = 'music/song1.mp3';
 
     audio = new Audio();
     audio.src = url;
@@ -44,7 +44,7 @@ function initMusicVisualization(){
     var analyser = audioCtx.createAnalyser();
     var gainNode = audioCtx.createGain();
 
-    source = audioCtx.createMediaElementSource(audio);
+    var source = audioCtx.createMediaElementSource(audio);
     source.connect(analyser);
     analyser.connect(gainNode);
     gainNode.connect(audioCtx.destination);
@@ -58,7 +58,6 @@ function initMusicVisualization(){
 
     ctx.fillStyle = 'rgb(0, 0, 0)';
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
-
 
     function draw() {
 
@@ -83,7 +82,7 @@ function initMusicVisualization(){
                 a: Math.random()
             };
 
-            ctx.strokeStyle = 'rgba(255, 255, 255, '+ color.a +')';
+            ctx.strokeStyle = 'rgba(255, '+ i* 10 % 255 +', '+ i* 10 % 255 +', '+ color.a +')';
             //ctx.strokeStyle = 'rgba('+ 0 +', '+ 100 +', '+ color.b +', '+ color.a +')';
             ctx.lineWidth = 4;
             ctx.beginPath();
